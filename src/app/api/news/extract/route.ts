@@ -16,6 +16,7 @@ export async function GET(req: Request) {
     }
 
     const controller = new AbortController();
+    const isIframeFriendly = url.includes('ndtv.com') || url.includes('news18.com') || url.includes('abplive.com');
     const timeoutId = setTimeout(() => controller.abort(), 8000);
     
     const response = await fetch(url, {
@@ -36,7 +37,8 @@ export async function GET(req: Request) {
         title: titleParam || "Article Protected by Publisher",
         image: imageParam || "https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&q=80&w=1000",
         content: (summaryParam || "This news publisher has strict firewall security settings that prevent our AI from extracting the text automatically.") + "\n\nTo read the rest of the story, please click the button below to view it directly on their official website.",
-        originalUrl: url
+        originalUrl: url,
+        useIframe: isIframeFriendly
       });
     }
 
@@ -48,7 +50,8 @@ export async function GET(req: Request) {
         title: titleParam || "Article Protected by Publisher",
         image: imageParam || "https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&q=80&w=1000",
         content: (summaryParam || "This news publisher has strict firewall security settings that prevent our AI from extracting the text automatically.") + "\n\nTo read the rest of the story, please click the button below to view it directly on their official website.",
-        originalUrl: url
+        originalUrl: url,
+        useIframe: isIframeFriendly
       });
     }
 

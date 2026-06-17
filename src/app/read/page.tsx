@@ -93,15 +93,21 @@ function ArticleReaderContent() {
               </div>
             </div>
 
-            {/* Right Column: Text Content */}
+            {/* Right Column: Text Content or Iframe */}
             <div className="lg:col-span-7 xl:col-span-6">
-              <div className="glass-card !bg-black/40 !border-white/5 !p-8 lg:!p-12 !rounded-3xl">
-                <div className="prose prose-invert prose-lg md:prose-xl max-w-none prose-p:leading-relaxed prose-p:text-slate-300 prose-a:text-emerald-400">
-                  {article.content.split('\n\n').map((paragraph: string, idx: number) => (
-                    <p key={idx} className="mb-8">{paragraph}</p>
-                  ))}
+              {article.useIframe ? (
+                <div className="w-full h-full min-h-[75vh] rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-white">
+                  <iframe src={article.originalUrl} className="w-full h-full min-h-[75vh] border-0" sandbox="allow-same-origin allow-scripts allow-popups allow-forms" />
                 </div>
-              </div>
+              ) : (
+                <div className="glass-card !bg-black/40 !border-white/5 !p-8 lg:!p-12 !rounded-3xl">
+                  <div className="prose prose-invert prose-lg md:prose-xl max-w-none prose-p:leading-relaxed prose-p:text-slate-300 prose-a:text-emerald-400">
+                    {article.content.split('\n\n').map((paragraph: string, idx: number) => (
+                      <p key={idx} className="mb-8">{paragraph}</p>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
 
           </article>
