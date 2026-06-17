@@ -8,6 +8,9 @@ function ArticleReaderContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const url = searchParams.get('url');
+  const title = searchParams.get('title');
+  const summary = searchParams.get('summary');
+  const image = searchParams.get('image');
 
   const [article, setArticle] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -22,7 +25,12 @@ function ArticleReaderContent() {
 
     const fetchArticle = async () => {
       try {
-        const res = await fetch(`/api/news/extract?url=${encodeURIComponent(url)}`);
+        let fetchUrl = `/api/news/extract?url=${encodeURIComponent(url)}`;
+        if (title) fetchUrl += `&title=${encodeURIComponent(title)}`;
+        if (summary) fetchUrl += `&summary=${encodeURIComponent(summary)}`;
+        if (image) fetchUrl += `&image=${encodeURIComponent(image)}`;
+        
+        const res = await fetch(fetchUrl);
         const data = await res.json();
         
         if (!res.ok) throw new Error(data.message || "Failed to fetch article");
