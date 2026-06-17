@@ -59,7 +59,7 @@ export async function GET() {
           }
 
           return {
-            id: item.guid || item.id || item.link,
+            id: item.guid || (item as any).id || item.link,
             title: cleanHtml(item.title || ''),
             link: finalLink,
             summary: cleanHtml(item.contentSnippet || item.description || ''),

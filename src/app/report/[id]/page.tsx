@@ -33,8 +33,8 @@ export default function ReportViewer({ params }: { params: Promise<{ id: string 
 
   return (
     <div className="min-h-screen p-6 md:p-10 lg:p-14 max-w-screen-2xl mx-auto space-y-10">
-      <Link href="/dashboard" className="inline-flex items-center gap-2 text-slate-400 hover:text-white transition-colors">
-        <ArrowLeft className="w-4 h-4" /> Back to Dashboard
+      <Link href="/ai-research" className="inline-flex items-center gap-2 text-slate-400 hover:text-white transition-colors">
+        <ArrowLeft className="w-4 h-4" /> Back to AI Agent
       </Link>
 
       <header className="glass-card border-l-4 border-l-purple-500">
@@ -50,24 +50,37 @@ export default function ReportViewer({ params }: { params: Promise<{ id: string 
 
       <section className="glass-card space-y-6 mb-8 border-t-4 border-t-purple-500">
         <h2 className="text-3xl font-bold mb-6 text-gradient">Top News Articles</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
-          {report.newsItems?.map((item: any, i: number) => (
-            <div key={i} className="bg-black/40 border border-white/10 rounded-xl overflow-hidden hover:bg-black/60 transition-colors flex flex-col">
-              {item.imageUrl && (
-                <div className="w-full h-48 sm:h-56 relative bg-gray-900 border-b border-white/5">
-                  <img src={item.imageUrl} alt={item.headline} className="w-full h-full object-cover" loading="lazy" />
+        
+        {!report.newsItems || report.newsItems.length === 0 ? (
+          <div className="bg-white/5 border border-white/10 rounded-xl p-8 text-center">
+            <h3 className="text-xl text-slate-300 font-medium mb-2">No Specific Articles Found</h3>
+            <p className="text-slate-400">The AI could not locate any specific, verified news articles for this topic at this moment. Please try a different search term.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+            {report.newsItems.map((item: any, i: number) => (
+              <div key={i} className="bg-black/40 border border-white/10 rounded-xl overflow-hidden hover:bg-black/60 transition-colors flex flex-col shadow-lg">
+                {item.imageUrl && (
+                  <div className="w-full h-48 sm:h-56 relative bg-gray-900 border-b border-white/5">
+                    <img src={item.imageUrl} alt={item.headline} className="w-full h-full object-cover" loading="lazy" />
+                  </div>
+                )}
+                <div className="p-6 flex flex-col flex-grow">
+                  <h3 className="text-xl font-bold mb-3">{item.headline}</h3>
+                  <p className="text-slate-300 leading-relaxed mb-6 flex-grow">{item.summary}</p>
+                  <div className="flex flex-col sm:flex-row gap-3 mt-auto">
+                    <Link href={`/read?url=${encodeURIComponent(item.sourceLink)}`} className="inline-flex items-center justify-center gap-2 text-sm font-bold text-black bg-teal-500 hover:bg-teal-400 px-5 py-2.5 rounded-xl transition-all shadow-[0_0_15px_rgba(20,184,166,0.3)] hover:shadow-[0_0_25px_rgba(20,184,166,0.5)]">
+                      Read Full Story
+                    </Link>
+                    <a href={item.sourceLink} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-2 text-sm text-slate-300 hover:text-white border border-white/10 px-5 py-2.5 rounded-xl transition-colors hover:bg-white/5">
+                      Original <ExternalLink className="w-4 h-4" />
+                    </a>
+                  </div>
                 </div>
-              )}
-              <div className="p-6 flex flex-col flex-grow">
-                <h3 className="text-xl font-bold mb-3">{item.headline}</h3>
-                <p className="text-slate-300 leading-relaxed mb-6 flex-grow">{item.summary}</p>
-                <a href={item.sourceLink} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-sm text-purple-400 hover:text-purple-300 border border-purple-500/30 px-5 py-2.5 rounded-full transition-colors hover:border-purple-400 bg-purple-500/5 hover:bg-purple-500/10 w-fit">
-                  Read Original Article <ExternalLink className="w-4 h-4" />
-                </a>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </section>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

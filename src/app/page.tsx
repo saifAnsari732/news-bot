@@ -118,7 +118,7 @@ export default function LiveNewsPage() {
       <div id="news-feed" className="max-w-screen-2xl mx-auto space-y-10 px-4 pb-20">
         
         {/* Sticky Filter & Refresh Bar */}
-        <div className="sticky top-6 z-50 flex flex-col md:flex-row md:items-center justify-between gap-6 p-4 md:px-8 bg-black/70 backdrop-blur-2xl border border-white/10 rounded-3xl shadow-[0_20px_40px_rgba(0,0,0,0.5)] mb-10 transition-all">
+        <div className="sticky top-0 z-50 flex flex-col md:flex-row md:items-center justify-between gap-6 p-4 md:px-8 bg-black/80 backdrop-blur-3xl border border-white/10 border-t-0 rounded-b-3xl shadow-[0_20px_40px_rgba(0,0,0,0.5)] mb-10 transition-all">
           <div className="flex flex-wrap gap-3">
             {channels.map(channel => (
               <button

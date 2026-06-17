@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { Suspense, useState, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { ArrowLeft, Loader2, ExternalLink } from "lucide-react";
 
-export default function ArticleReaderPage() {
+function ArticleReaderContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const url = searchParams.get('url');
@@ -100,5 +100,17 @@ export default function ArticleReaderPage() {
         ) : null}
       </div>
     </div>
+  );
+}
+
+export default function ArticleReaderPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
+        <Loader2 className="w-12 h-12 animate-spin text-emerald-500" />
+      </div>
+    }>
+      <ArticleReaderContent />
+    </Suspense>
   );
 }

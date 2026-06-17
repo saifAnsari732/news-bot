@@ -27,6 +27,10 @@ export async function POST(req: Request) {
         item: [
           ['News:Image', 'imageUrl']
         ]
+      },
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        'Accept': 'application/rss+xml, application/xml;q=0.9, text/xml;q=0.8'
       }
     });
 
@@ -39,7 +43,7 @@ export async function POST(req: Request) {
       parser.parseURL(rssUrlHi).catch(() => ({ items: [] }))
     ]);
     
-    const combinedItems = [];
+    const combinedItems: any[] = [];
     const maxLength = Math.max(feedEn.items.length, feedHi.items.length);
     for (let i = 0; i < maxLength; i++) {
       if (feedEn.items[i]) combinedItems.push(feedEn.items[i]);
