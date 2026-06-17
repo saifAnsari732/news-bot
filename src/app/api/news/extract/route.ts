@@ -28,10 +28,27 @@ export async function GET(req: Request) {
     clearTimeout(timeoutId);
 
     if (!response.ok) {
-      throw new Error(`Failed to fetch article: ${response.status}`);
+      // Return a graceful fallback instead of crashing
+      return NextResponse.json({
+        title: "Article Protected by Publisher",
+        image: "https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&q=80&w=1000",
+        content: "This news publisher (like NDTV, Times of India, etc.) has strict firewall security settings that prevent our AI from extracting the text automatically.\n\nTo read the full story, please click the button below to view it directly on their official website.",
+        originalUrl: url
+      });
     }
 
     const html = await response.text();
+    
+    // Check for Cloudflare / Anti-Bot challenge pages
+    if (html.includes('Cloudflare') || html.includes('Just a moment...') || html.includes('Enable JavaScript and cookies to continue')) {
+      return NextResponse.json({
+        title: "Article Protected by Publisher",
+        image: "https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&q=80&w=1000",
+        content: "This news publisher has strict firewall security settings that prevent our AI from extracting the text automatically.\n\nTo read the full story, please click the button below to view it directly on their official website.",
+        originalUrl: url
+      });
+    }
+
     const $ = cheerio.load(html);
 
     // Extract basic metadata
