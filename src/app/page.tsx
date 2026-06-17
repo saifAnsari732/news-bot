@@ -171,7 +171,7 @@ export default function LiveNewsPage() {
                 </div>
                 <h3 className="text-lg font-bold mb-3 line-clamp-3 leading-snug group-hover:text-emerald-400 transition-colors">{item.title}</h3>
                 <p className="text-sm text-slate-300 leading-relaxed mb-6 line-clamp-3 flex-grow">{item.summary}</p>
-                <Link href={`/read?url=${encodeURIComponent(item.link)}&title=${encodeURIComponent(item.title || '')}&summary=${encodeURIComponent(item.summary || '')}&image=${encodeURIComponent(item.image || '')}`} className="inline-flex items-center justify-center gap-2 text-sm font-medium text-black bg-white hover:bg-slate-200 px-4 py-2.5 rounded-lg transition-colors mt-auto">
+                <Link href={`/read?url=${encodeURIComponent(item.link)}&title=${encodeURIComponent(item.title || '')}&summary=${encodeURIComponent(item.summary || '')}&image=${encodeURIComponent(item.imageUrl || '')}`} className="inline-flex items-center justify-center gap-2 text-sm font-medium text-black bg-white hover:bg-slate-200 px-4 py-2.5 rounded-lg transition-colors mt-auto">
                   Read Full Story <ArrowLeft className="w-4 h-4 rotate-180" />
                 </Link>
               </div>
