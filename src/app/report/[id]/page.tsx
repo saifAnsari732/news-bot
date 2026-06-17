@@ -69,7 +69,7 @@ export default function ReportViewer({ params }: { params: Promise<{ id: string 
                   <h3 className="text-xl font-bold mb-3">{item.headline}</h3>
                   <p className="text-slate-300 leading-relaxed mb-6 flex-grow">{item.summary}</p>
                   <div className="flex flex-col sm:flex-row gap-3 mt-auto">
-                    <Link href={`/read?url=${encodeURIComponent(item.sourceLink)}`} className="inline-flex items-center justify-center gap-2 text-sm font-bold text-black bg-teal-500 hover:bg-teal-400 px-5 py-2.5 rounded-xl transition-all shadow-[0_0_15px_rgba(20,184,166,0.3)] hover:shadow-[0_0_25px_rgba(20,184,166,0.5)]">
+                    <Link href={`/read?url=${encodeURIComponent(item.sourceLink)}&title=${encodeURIComponent(item.headline || '')}&summary=${encodeURIComponent(item.summary || '')}&image=${encodeURIComponent(item.imageUrl || '')}`} className="inline-flex items-center justify-center gap-2 text-sm font-bold text-black bg-teal-500 hover:bg-teal-400 px-5 py-2.5 rounded-xl transition-all shadow-[0_0_15px_rgba(20,184,166,0.3)] hover:shadow-[0_0_25px_rgba(20,184,166,0.5)]">
                       Read Full Story
                     </Link>
                     <a href={item.sourceLink} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-2 text-sm text-slate-300 hover:text-white border border-white/10 px-5 py-2.5 rounded-xl transition-colors hover:bg-white/5">
